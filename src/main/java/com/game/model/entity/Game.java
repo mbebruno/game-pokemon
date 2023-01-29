@@ -22,14 +22,14 @@ public class Game {
     @SequenceGenerator(name = "game_generator", sequenceName = "game_seq", allocationSize = 1)
     private Long id;
     private String name;
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(
             mappedBy = "game",
             cascade = CascadeType.REMOVE,
             orphanRemoval = true
     )
     private Set<Player> players;
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(
             mappedBy = "game",
             cascade = CascadeType.REMOVE,

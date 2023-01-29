@@ -63,7 +63,7 @@ public class PlayerServiceImpl implements PlayerService {
                 .orElseThrow(()-> new NotFoundException(ERROR_FINDING_PLAYER, playerPokemonRequest.getPlayerId()));
 
         //check if pokemon exist
-        Pokemon pokemon=this.pokemonRepository.findById(playerPokemonRequest.getPlayerId())
+        Pokemon pokemon=this.pokemonRepository.findById(playerPokemonRequest.getPokemonId())
                 .orElseThrow(()-> new NotFoundException(ERROR_FINDING_POKEMON, playerPokemonRequest.getPokemonId()));
 
         player.setPokemon(pokemon);

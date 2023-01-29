@@ -25,6 +25,7 @@ public class GameController {
 
     @PostMapping
     ResponseEntity<APIResponse<GameDto>>createNewGame(@RequestBody @Valid GameRequest gameRequest){
+        log.debug("create game , new values : {}...", gameRequest);
         APIResponse<GameDto> apiResponse= APIResponse.<GameDto>builder()
                 .status(Message.MSG_SUCCES)
                 .results(gameService.createGame(gameRequest))
@@ -35,6 +36,7 @@ public class GameController {
 
     @GetMapping
     ResponseEntity<APIResponse<List<GameDto>>>listOfGame(){
+        log.debug("list games...");
         APIResponse<List<GameDto>> apiResponse= APIResponse.<List<GameDto>>builder()
                 .status(Message.MSG_SUCCES)
                 .results(gameService.listGames())

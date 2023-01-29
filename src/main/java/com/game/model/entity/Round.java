@@ -21,12 +21,12 @@ public class Round {
     @SequenceGenerator(name = "round_generator", sequenceName = "round_seq", allocationSize = 1)
     private Long id;
 
-    @JsonBackReference
+
     @OneToOne
     @JoinColumn(name = "winner_id", referencedColumnName = "id",nullable=true)
     private Player winner;
-    @JsonBackReference
-    @JsonIgnore
+
+
     @ManyToOne
     @JoinColumn(name="battle_id", nullable=false)
     private Battle battle;

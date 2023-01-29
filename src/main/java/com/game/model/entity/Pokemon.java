@@ -23,9 +23,8 @@ public class Pokemon {
     private  int height;
     private  int weight;
     private  int healthPoints;
-    @JsonBackReference
-    @OneToOne(mappedBy = "pokemon")
-    private  Player player;
+
+
 
 
 }

@@ -24,11 +24,9 @@ import java.util.List;
 public class RoundController {
 
     private final RoundService roundService;
-
-
-
     @GetMapping
     ResponseEntity<APIResponse<List<RoundDto>>>listOfRounds(){
+        log.debug("list rounds...");
         APIResponse<List<RoundDto>> apiResponse= APIResponse.<List<RoundDto>>builder()
                 .status(Message.MSG_SUCCES)
                 .results(this.roundService.listRounds())

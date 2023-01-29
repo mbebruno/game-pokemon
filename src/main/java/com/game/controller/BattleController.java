@@ -26,7 +26,8 @@ public class BattleController {
     private final BattleService battleService;
 
     @PostMapping
-    ResponseEntity<APIResponse<BattleDto>>createNewGame(@RequestBody @Valid BattleRequest battleRequest){
+    ResponseEntity<APIResponse<BattleDto>>createBattle(@RequestBody @Valid BattleRequest battleRequest){
+        log.debug("create battle , new values : {}...", battleRequest);
         APIResponse<BattleDto> apiResponse= APIResponse.<BattleDto>builder()
                 .status(Message.MSG_SUCCES)
                 .results(battleService.createBattle(battleRequest))
@@ -37,6 +38,7 @@ public class BattleController {
 
     @GetMapping
     ResponseEntity<APIResponse<List<BattleDto>>>listOfBattle(){
+        log.debug("list battles...");
         APIResponse<List<BattleDto>> apiResponse= APIResponse.<List<BattleDto>>builder()
                 .status(Message.MSG_SUCCES)
                 .results(this.battleService.listBattles())

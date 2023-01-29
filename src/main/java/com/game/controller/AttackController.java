@@ -27,8 +27,8 @@ public class AttackController {
     private final AttackService attackService;
 
     @PatchMapping
-    ResponseEntity<APIResponse<List<RoundDto>>>createNewGame(@RequestBody @Valid AttackRequest attackRequest){
-
+    ResponseEntity<APIResponse<List<RoundDto>>>launchAttack(@RequestBody @Valid AttackRequest attackRequest){
+        log.debug("Launch attack , new values : {}...", attackRequest);
         APIResponse<List<RoundDto>> apiResponse= APIResponse.<List<RoundDto>>builder()
                 .status(Message.MSG_SUCCES)
                 .results(attackService.launchAttack(attackRequest))

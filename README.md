@@ -109,3 +109,5 @@ For example :
         "type":"SPECIAL"
         }'
 It's impossible.
+
+## NB : You can create another battle and start with the same players.You can change pokemons on new battle

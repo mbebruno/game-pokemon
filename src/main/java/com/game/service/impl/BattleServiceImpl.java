@@ -6,7 +6,6 @@ import com.game.exception.ApplicationException;
 import com.game.exception.NotFoundException;
 import com.game.mapper.BattleMapper;
 import com.game.model.dto.BattleDto;
-import com.game.model.dto.PlayerDto;
 import com.game.model.dto.WinnerDto;
 import com.game.model.entity.Battle;
 import com.game.model.entity.Game;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.game.enums.ApplicationError.*;
 

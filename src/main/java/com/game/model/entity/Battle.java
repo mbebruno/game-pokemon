@@ -23,11 +23,11 @@ public class Battle {
     private String name;
     private int roundNumber;
 
-    @JsonBackReference
+
     @ManyToOne
     @JoinColumn(name="game_id", nullable=false)
     private Game game;
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(
             mappedBy = "battle",
             cascade = CascadeType.ALL,

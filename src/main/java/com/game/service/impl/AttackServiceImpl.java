@@ -56,6 +56,7 @@ public class AttackServiceImpl implements AttackService {
                 ()->new NotFoundException(ApplicationError.ERROR_FINDING_BATTLE,attackRequest.getBattleId()));
 
         //choice round available
+
         List<Round> rounds=battle.getRounds().stream().filter(round->round.getWinner()==null).
                 limit(typeAttackConfig[0]).collect(Collectors.toList());
 
@@ -67,9 +68,15 @@ public class AttackServiceImpl implements AttackService {
 
         //apply attack to each round
         int[] finalTypeAttackConfig = typeAttackConfig;
+        int healthPointsPokemon1=players.get(0).getPokemon().getHealthPoints();
+        int healthPointsPokemon2=players.get(1).getPokemon().getHealthPoints();
         return rounds.stream().map(round->{
-            Pokemon winnerRound=  battle(players.get(0).getPokemon(), players.get(1).getPokemon(), finalTypeAttackConfig[1] , finalTypeAttackConfig[2]);
-            round.setWinner(winnerRound.getPlayer());
+            Player winner=  battle(players.get(0), players.get(1),
+                    finalTypeAttackConfig[1] , finalTypeAttackConfig[2]);
+            round.setWinner(winner);
+            //re-initialase pokemno with Hp
+            players.get(0).getPokemon().setHealthPoints(healthPointsPokemon1);
+            players.get(1).getPokemon().setHealthPoints(healthPointsPokemon2);
             this.roundRepository.save(round);
             return this.roundMapper.roundToRoundDto(round);
         }).collect(Collectors.toList());
@@ -79,26 +86,28 @@ public class AttackServiceImpl implements AttackService {
     /**
      *
      * compute battle between to pokemon
-     * @param pokemon1  value of first pokemon
-     * @param pokemon2  value of second pokemon
+     * @param player1  value of first player
+     * @param player2  value of second player
      * @param max  max HP to generate
      * @param min  value HP to generate
-     * @return Pokemon winner , pokemon with "HealthPoints" more than 0
+     * @return player winner , pokemon with "HealthPoints" more than 0
      */
-    private Pokemon battle(Pokemon pokemon1, Pokemon pokemon2,int max , int min){
+    private Player battle(Player player1, Player player2,int max , int min){
         do{
+            int damagePokomon1=randomConfig.random().nextInt(max-min)+min;
+            int damagePokomon2=randomConfig.random().nextInt(max-min)+min;
 
            //pokemon2  attack pokemeno1
-            pokemon1.setHealthPoints(pokemon1.getHealthPoints()-randomConfig.random().nextInt(max-min)+min);
+            player1.getPokemon().setHealthPoints(player1.getPokemon().getHealthPoints()-damagePokomon1);
             //pokemon2  attack pokemeno1
-            pokemon2.setHealthPoints(pokemon2.getHealthPoints()-randomConfig.random().nextInt(max-min)+min);
+            player2.getPokemon().setHealthPoints(player2.getPokemon().getHealthPoints()-damagePokomon2);
 
-        }while(pokemon1.getHealthPoints() >= 1  && pokemon2.getHealthPoints() >=1);
+        }while(player1.getPokemon().getHealthPoints() >= 1  && player2.getPokemon().getHealthPoints() >=1);
 
-        if(pokemon1.getHealthPoints() < 1)
-            return pokemon2;
+        if(player1.getPokemon().getHealthPoints() < 1)
+            return player2;
         else
-            return pokemon1;
+            return player1;
     }
 
 
